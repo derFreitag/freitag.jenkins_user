@@ -1,5 +1,5 @@
 freitag.jenkins_user
-===================
+====================
 Ansible role to add and configure a system user for jenkins CI.
 
 Requirements
@@ -24,8 +24,6 @@ None
 
 Example Playbook
 ----------------
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
          - { role: freitag.jenkins_user }
