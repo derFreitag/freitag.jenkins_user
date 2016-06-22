@@ -17,22 +17,22 @@
   become: yes
   become_user: jenkins
   copy:
-    content: "{{ ssh_public_key }}"
-    dest: "{{ jenkins_user_home }}/.ssh/id_rsa.pub"
-    owner: jenkins
-    group: jenkins
-    mode: 0600
+    content="{{ ssh_public_key }}"
+    dest="{{ jenkins_user_home }}/.ssh/id_rsa.pub"
+    owner=jenkins
+    group=jenkins
+    mode=0600
   when: ssh_public_key is defined
 
 - name: Copy SSH private key
   become: yes
   become_user: jenkins
   copy:
-    content: "{{ ssh_private_key }}"
-    dest: "{{ jenkins_user_home }}/.ssh/id_rsa"
-    owner: jenkins
-    group: jenkins
-    mode: 0600
+    content="{{ ssh_private_key }}"
+    dest="{{ jenkins_user_home }}/.ssh/id_rsa"
+    owner=jenkins
+    group=jenkins
+    mode=0600
   when: ssh_private_key is defined
 
 - name: Add authorized keys
