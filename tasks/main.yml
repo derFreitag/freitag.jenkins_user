@@ -1,0 +1,77 @@
+---
+
+- name: Create jenkins user
+  become: yes
+  user: name=jenkins
+
+- name: Create .ssh folder
+  become: yes
+  become_user: jenkins
+  file:
+    path="{{ jenkins_user_home }}/.ssh"
+    state=directory
+    owner=jenkins
+    group=jenkins
+
+- name: Copy SSH public key
+  become: yes
+  become_user: jenkins
+  copy:
+    content: "{{ ssh_public_key }}"
+    dest: "{{ jenkins_user_home }}/.ssh/id_rsa.pub"
+    owner: jenkins
+    group: jenkins
+    mode: 0600
+  when: ssh_public_key is defined
+
+- name: Copy SSH private key
+  become: yes
+  become_user: jenkins
+  copy:
+    content: "{{ ssh_private_key }}"
+    dest: "{{ jenkins_user_home }}/.ssh/id_rsa"
+    owner: jenkins
+    group: jenkins
+    mode: 0600
+  when: ssh_private_key is defined
+
+- name: Add authorized keys
+  become: yes
+  become_user: jenkins
+  authorized_key:
+    user=jenkins
+    key="{{ item }}"
+  with_items:
+    - "{{ authorized_keys }}"
+  when: authorized_keys is defined
+
+- name: Change default shell
+  become: yes
+  shell: /usr/bin/chsh -s /bin/bash jenkins
+
+- name: Configure bash
+  become: yes
+  become_user: jenkins
+  copy:
+    src=bashrc
+    dest=/var/lib/jenkins/.bashrc
+    owner=jenkins
+    group=jenkins
+
+- name: Configure vim
+  become: yes
+  become_user: jenkins
+  copy:
+    src=bashrc
+    dest="{{ jenkins_user_home }}/.vimrc"
+    owner=jenkins
+    group=jenkins
+
+- name: Configure git
+  become: yes
+  become_user: jenkins
+  copy:
+    src=gitconfig
+    dest="{{ jenkins_user_home }}/.gitconfig"
+    owner=jenkins
+    group=jenkins
