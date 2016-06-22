@@ -54,7 +54,7 @@
   become_user: jenkins
   copy:
     src=bashrc
-    dest=/var/lib/jenkins/.bashrc
+    dest="{{ jenkins_user_home }}/.bashrc"
     owner=jenkins
     group=jenkins
 
