@@ -45,6 +45,17 @@
     - "{{ authorized_keys }}"
   when: authorized_keys is defined
 
+- name: Configure ssh
+  become: yes
+  become_user: jenkins
+  template:
+    src=ssh_config
+    dest="{{ jenkins_user_home }}/.ssh/config"
+    owner=jenkins
+    group=jenkins
+    mode=0600
+  when: trusted_hosts is defined
+
 - name: Change default shell
   become: yes
   shell: /usr/bin/chsh -s /bin/bash jenkins

@@ -12,6 +12,8 @@ Role Variables
 
 **Optional variables**
 
+- ``trusted_hosts`` list of hosts that their SSH key fingerprint will be ignored.
+
 *Please store them in ansible-vault or such!*
 
 - ``ssh_public_key`` a public key to add to the user

@@ -1,0 +1,5 @@
+{% for trusted in trusted_hosts %}
+Host {{ trusted }}
+   StrictHostKeyChecking no
+   UserKnownHostsFile=/dev/null
+{% endfor %}
