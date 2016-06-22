@@ -62,7 +62,7 @@
   become: yes
   become_user: jenkins
   copy:
-    src=bashrc
+    src=vimrc
     dest="{{ jenkins_user_home }}/.vimrc"
     owner=jenkins
     group=jenkins
